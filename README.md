@@ -17,7 +17,7 @@
 ```console
 $ docker run --name some-rabbitmq -d tklx/rabbitmq
 $ docker run --link some-rabbitmq:rabbit --name some-celery -d tklx/celery
-...
+```
 
 ### Check the status of the cluster (RabbitMQ)
 ```console
@@ -28,7 +28,7 @@ $ docker run --link some-rabbitmq:rabbit --rm celery python -m celery status
 ```console
 $ docker run --name some-redis -d tklx/redis
 $ docker run --link some-redis:redis -e CELERY_BROKER_URL=redis://redis --name some-celery -d tklx/celery
-...
+```
 
 ### Check the status of the cluster (Redis)
 ```console
