@@ -1,0 +1,23 @@
+# !include frombase
+# !include tini
+
+ARG NEED_USER='celery'
+ARG NEED_HOME='/home/celery'
+
+# !include security
+
+# App-specific config
+RUN set -x \
+    && apt-get update \
+    && apt-get -y --no-install-recommends install python-celery celeryd \
+    && { \
+        echo 'import os'; \
+        echo "BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'amqp://')"; \
+    } > /home/celery/celeryconfig.py
+
+ENV CELERY_BROKER_URL=amqp://guest@rabbit
+
+USER celery
+WORKDIR /home/celery
+
+CMD ["python", "-m", "celery", "worker"]
